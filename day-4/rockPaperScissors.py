@@ -27,28 +27,29 @@ scissors = '''
 
 #Write your code below this line 👇
 import random
-playerMove = int(input("Rock (1), Paper (2), or Scissors (3)?"))
-computerMove = random.randint(1, 3)
+playerMove = int(input("Rock (0), Paper (1), or Scissors (2)?"))
+computerMove = random.randint(0, 2)
+options = [rock, paper, scissors]
 
 print("Your Move:")
-if playerMove == 1:
-  print(f"{rock}")
+if playerMove == 0:
+  print(f"{options[0]}")
+elif playerMove == 1:
+  print(f"{options[1]}")
 elif playerMove == 2:
-  print(f"{paper}")
-elif playerMove == 3:
-  print(f"{scissors}")
+  print(f"{options[2]}")
 
 print("Computer Move:")
-if computerMove == 1:
-  print(f"{rock}")
+if computerMove == 0:
+  print(f"{options[0]}")
+elif computerMove == 1:
+  print(f"{options[1]}")
 elif computerMove == 2:
-  print(f"{paper}")
-elif computerMove == 3:
-  print(f"{scissors}")
+  print(f"{options[2]}")
   
-if((playerMove == 1 and computerMove == 2) or (playerMove == 2 and computerMove == 3) or (playerMove == 3 and computerMove == 1)):
+if((playerMove == 0 and computerMove == 1) or (playerMove == 1 and computerMove == 2) or (playerMove == 2 and computerMove == 0)):
   print("You loose")
-elif((playerMove == 3 and computerMove == 2) or (playerMove == 2 and computerMove == 1) or (playerMove == 1 and computerMove == 3)):
+elif((playerMove == 2 and computerMove == 1) or (playerMove == 1 and computerMove == 0) or (playerMove == 0 and computerMove == 2)):
   print("You win")
 else:
   print("Tie game")
