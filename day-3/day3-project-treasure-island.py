@@ -38,7 +38,7 @@ if direction.lower() == "left":
     elif door.lower() == "blue":
       print("You are eaten by beasts. Game over")
     else:
-      print("Game Over")z
+      print("Game Over")
   else:
     print("You get attacked by trout. Game over")
 else:
