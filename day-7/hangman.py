@@ -15,16 +15,18 @@ print (display)
 
 
 #TODO-2 - Ask the user to guess a letter and assign their answer to a variable called guess. Make guess lowercase.
-letter_guess = input("What letter do you want to guess? ")
-index = 0
 
-for letter in chosen_word:
-  if(letter == letter_guess):
-    display[index] = letter
-    print (display)
-  index += 1
+while "_" in display:
+  index = 0
+  letter_guess = input("What letter do you want to guess? ")
+  for letter in chosen_word:
+    if(letter == letter_guess):
+      print (index)
+      display[index] = letter
+      print (display)
+    index += 1
 
-
+print("You win!")
 
 #TODO-3 - Check if the letter the user guessed (guess) is one of the letters in the chosen_word.
 # win_flag = False
