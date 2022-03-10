@@ -4,43 +4,26 @@ direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
 text = input("Type your message:\n").lower()
 shift = int(input("Type the shift number:\n"))
 
-#TODO-1: Create a function called 'encrypt' that takes the 'text' and 'shift' as inputs.
-def encrypt (text, shift):
+def caesar (text, shift, direction):
   shiftedMessage = ""
+  resetAmount = 26
+  if(direction == "encode"):
+    shift *= 1
+    resetAmount *= -1
+  if(direction == "decode"):
+    shift *= -1
+    resetAmount *= 1
+
   for letter in text:
     if alphabet.index(letter)+shift < len(alphabet):
       shiftedLetter = alphabet[alphabet.index(letter)+shift]
       shiftedMessage += shiftedLetter
     else:
-      shiftedLetter = alphabet[alphabet.index(letter)+shift-26]
+      shiftedLetter = alphabet[alphabet.index(letter)+shift+resetAmount]
       shiftedMessage += shiftedLetter
   return(shiftedMessage)
 
-def decrypt (text, shift):
-  shiftedMessage = ""
-  for letter in text:
-    if alphabet.index(letter)-shift < len(alphabet):
-      shiftedLetter = alphabet[alphabet.index(letter)-shift]
-      shiftedMessage += shiftedLetter
-    else:
-      shiftedLetter = alphabet[alphabet.index(letter)-shift+26]
-      shiftedMessage += shiftedLetter
-  return(shiftedMessage)
-
-    #TODO-2: Inside the 'encrypt' function, shift each letter of the 'text' forwards in the alphabet by the shift amount and print the encrypted text.  
-    #e.g. 
-    #plain_text = "hello"
-    #shift = 5
-    #cipher_text = "mjqqt"
-    #print output: "The encoded text is mjqqt"
-
-    ##HINT: How do you get the index of an item in a list:
-    #https://stackoverflow.com/questions/176918/finding-the-index-of-an-item-in-a-list
-
-    ##🐛Bug alert: What happens if you try to encode the word 'civilization'?🐛
-
-#TODO-3: Call the encrypt function and pass in the user inputs. You should be able to test the code and encrypt a message. 
-shiftedText = encrypt(text, shift)
-print(shiftedText)
-originalText = decrypt(shiftedText, shift)
-print(originalText)
+encodedMessage = (caesar(text, shift, direction))
+dencodedMessage = (caesar(encodedMessage, shift, direction))
+print(encodedMessage)
+print(dencodedMessage)
