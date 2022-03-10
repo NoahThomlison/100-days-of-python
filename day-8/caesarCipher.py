@@ -14,7 +14,19 @@ def encrypt (text, shift):
     else:
       shiftedLetter = alphabet[alphabet.index(letter)+shift-26]
       shiftedMessage += shiftedLetter
-  print(shiftedMessage)
+  return(shiftedMessage)
+
+def decrypt (text, shift):
+  shiftedMessage = ""
+  for letter in text:
+    if alphabet.index(letter)-shift < len(alphabet):
+      shiftedLetter = alphabet[alphabet.index(letter)-shift]
+      shiftedMessage += shiftedLetter
+    else:
+      shiftedLetter = alphabet[alphabet.index(letter)-shift+26]
+      shiftedMessage += shiftedLetter
+  return(shiftedMessage)
+
     #TODO-2: Inside the 'encrypt' function, shift each letter of the 'text' forwards in the alphabet by the shift amount and print the encrypted text.  
     #e.g. 
     #plain_text = "hello"
@@ -28,4 +40,7 @@ def encrypt (text, shift):
     ##🐛Bug alert: What happens if you try to encode the word 'civilization'?🐛
 
 #TODO-3: Call the encrypt function and pass in the user inputs. You should be able to test the code and encrypt a message. 
-encrypt(text, shift)
+shiftedText = encrypt(text, shift)
+print(shiftedText)
+originalText = decrypt(shiftedText, shift)
+print(originalText)
