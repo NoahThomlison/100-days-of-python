@@ -15,32 +15,45 @@ logo = """
 |_____________________|
 """
 
-def doMath (number, secondNumber, operation):
-  if operation == "+":
-    answer = number + secondNumber
-  elif operation == "-":
-    answer = number - secondNumber
-  elif operation == "*":
-    answer = number * secondNumber
-  elif operation == "/":
-    answer = number / secondNumber
+def add (number, secondNumber):
+  answer = number + secondNumber
   return answer
+
+def subtract (number, secondNumber):
+  answer = number - secondNumber
+  return answer
+
+def multiple (number, secondNumber):
+  answer = number * secondNumber
+  return answer
+
+def divide (number, secondNumber):
+  answer = number / secondNumber
+  return answer
+
+operations = {
+  "+" : add,
+  "-" : subtract,
+  "*" : multiple,
+  "/" : divide
+}
 
 print(logo)
 moreMath = True
 more = "n"
 while moreMath == True:
   if more == "n":
-    number = int(input("What is your first number: "))
+    number = float(input("What is your first number: "))
     operation = input("What operation (+ - * / ): ")
-    secondNumber = int(input("What is your second number: "))
+    secondNumber = float(input("What is your second number: "))
   if more == "y":
     print(f"{answer} is your first number")
     number = answer
     operation = input("What operation (+ - * / ): ")
     secondNumber = int(input("What is your second number: "))
 
-  answer = doMath(number, secondNumber, operation)
+  functionToDo = operations[operation]
+  answer = functionToDo(number, secondNumber)
 
   print(f"{number} {operation} {secondNumber} = {answer}")
   more = input(f'Type "y" to continue calculating with {answer}, or type "n" to start a new calculation. ')
