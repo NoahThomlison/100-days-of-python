@@ -37,20 +37,38 @@ cards = [
   "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
 
 dealerCards = []
+visibleDealerCards = []
 playerCards = []
-activePlayer = "player"
 
 def dealCards(player):
-  print(len(cards))
+  # print(len(cards))
   dealtCard = cards[random.randint(0, len(cards)-1)]
+  if(player == "dealer" and len(dealerCards) == 0):
+    dealerCards.append(dealtCard)
+    visibleDealerCards.append(dealtCard)
+  elif(player == "dealer"):
+    dealerCards.append(dealtCard)
+  else:
+    playerCards.append(dealtCard)
   cards.remove(dealtCard)
-  print(len(cards))
-  print(dealtCard)
+  # print(len(cards))
+  # print(dealtCard)
   return player
 
-print(dealCards(activePlayer))
+def gamePlay ():
+  activePlayer = "dealer"
+  dealCards(activePlayer)
+  dealCards(activePlayer)
 
+  activePlayer = "player"
+  dealCards(activePlayer)
+  dealCards(activePlayer)
 
+  print(dealerCards)
+  print(visibleDealerCards)
+  print(playerCards)
+
+gamePlay()
 
 
 
