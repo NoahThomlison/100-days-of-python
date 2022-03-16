@@ -9,21 +9,21 @@
 # Include two different difficulty levels (e.g., 10 guesses in easy mode, only 5 guesses in hard mode).
 import random
 
-
 print("Welcome to the guessing game!")
-difficultyLevel = input("Would you like easy or hard mode?" )
+difficultyLevel = input("Would you like easy or hard mode? ")
 difficultyLevel = difficultyLevel.lower()
 if(difficultyLevel == "easy"):
   lives = 10
 elif(difficultyLevel == "hard"):
   lives = 5
 
-number = random.ranint(1, 100)
+number = random.randint(1, 100)
 correct = False
 
+print("Choose a number between 1 and 100")
 
-
-while lives > 0 or correct == False:
+while lives >= 0 and correct == False:
+  print(f"You currently have {lives} lives left.\n")
   guess = int(input("What is your guess? "))
   if(guess > number):
     print("Your guess was too high.")
