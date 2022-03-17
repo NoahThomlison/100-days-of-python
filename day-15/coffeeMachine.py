@@ -37,8 +37,6 @@ resources = {
 def checkResources(order):
   haveIngredient = True
   for ingredient in MENU[order]["ingredients"]:
-    # print(MENU[order]["ingredients"][ingredient])
-    # print(resources[ingredient])
     if((MENU[order]["ingredients"][ingredient]) > (resources[ingredient])):
       print(f"You do not have enough {ingredient}. Please refill the machine")
       haveIngredient = False
@@ -54,23 +52,30 @@ def takePayment(order):
   totalPayment = quarters * .25 + dimes * .1 + nickles * .05 + pennies * .01
   
   if totalPayment < MENU[order]['cost']:
-    print("You have not put in enough money. Please start over. Refunding deposited money")
+    print("You have not put in enough money. Please start over. Refunding deposited money.")
     return(False)
   else:
-    change = MENU[order]['cost'] - totalPayment
+    change = round(MENU[order]['cost'] - totalPayment * -1, 3)
     print(f"Your change is {change}")
     resources["coins"] = MENU[order]['cost']
-
+    return(True)
   print(resources["coins"])
 
-def updateResources(drinkOrder):
-  print("nothing")
+def updateResources(order):
+  for ingredient in MENU[order]["ingredients"]:
+    resources[ingredient] -= MENU[order]["ingredients"][ingredient]
 
 def interface (MENU, resources):
-  drinkOrder = input("What would you like to order? (espresso/latte/cappuccino) ")
-  if checkResources(drinkOrder):
-    takePayment(drinkOrder)
-
-  updateResources(drinkOrder)
+  continueOrdering = True
+  while continueOrdering:
+    drinkOrder = input("What would you like to order? (espresso/latte/cappuccino) ")
+    if checkResources(drinkOrder):
+      if(takePayment(drinkOrder)):
+        updateResources(drinkOrder)
+        print(f"Dispensing {drinkOrder}")
+        if(input("Would you like to order another drink? ") == "n"):
+          continueOrdering = False
+    else:
+      continueOrdering = False
 
 interface(MENU, resources)
