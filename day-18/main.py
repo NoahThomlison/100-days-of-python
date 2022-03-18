@@ -15,15 +15,11 @@ tim.shape("circle")
 rgb_colors = []
 colors = colorgram.extract('image.jpg', 30)
 
-dots = [(202, 164, 110), (240, 245, 241), (236, 239, 243), (149, 75, 50), (222, 201, 136), (53, 93, 123), (170, 154, 41), (138, 31, 20), (134, 163, 184), (197, 92, 73), (47, 121, 86), (73, 43, 35), (145, 178, 149), (14, 98, 70), (232, 176, 165), (160, 142, 158), (54, 45, 50), (101, 75, 77), (183, 205, 171), (36, 60, 74), (19, 86, 89), (82, 148, 129), (147, 17, 19), (27, 68, 102), (12, 70, 64), (107, 127, 153), (176, 192, 208), (168, 99, 102)]
+dots = [(202, 164, 110), (149, 75, 50), (222, 201, 136), (53, 93, 123), (170, 154, 41), (138, 31, 20), (134, 163, 184), (197, 92, 73), (47, 121, 86), (73, 43, 35), (145, 178, 149), (14, 98, 70), (232, 176, 165), (160, 142, 158), (54, 45, 50), (101, 75, 77), (183, 205, 171), (36, 60, 74), (19, 86, 89), (82, 148, 129), (147, 17, 19), (27, 68, 102), (12, 70, 64), (107, 127, 153), (176, 192, 208), (168, 99, 102)]
 
 def homePosition(sizeOfPainting):
     tim.penup()
-    tim.left(180)
-    tim.forward(sizeOfPainting/2)
-    tim.left(90)
-    tim.forward(sizeOfPainting/2)
-    tim.left(90)
+    tim.goto(-sizeOfPainting/2, -sizeOfPainting/2)
 
 def drawBorder(sizeOfPainting):
     tim.pendown()
@@ -37,42 +33,50 @@ def drawBorder(sizeOfPainting):
     tim.penup()
 
 
-def goToStart(offset):
-    tim.left(180)
-    tim.forward(offset)
+def goToStart(spacing):
+    tim.left(90)
+    tim.forward(spacing)
+    tim.left(90)
+    tim.forward(spacing)
     tim.right(90)
-    tim.forward(offset)
 
 
-def printDots(sizeOfPainting, sizeOfArray, offset):
+
+def printDots(spacing, sizeOfArray):
     rowIndex = 0
-    for row in range (0, sizeOfArray-1):
-        for column in range (0, sizeOfArray-1):
-            print(row, column)
+    for row in range (0, sizeOfArray):
+        print(row)
+        for column in range (0, sizeOfArray):
+            tim.color(dots[random.randint(0, len(dots)-1)])
             tim.stamp()
-            randomDot = random.randint(0, len(dots)-1)
 
-        if(row % 2 == 0):
-            tim.stamp()
+            #if end condition, do not move forward
+            if(column == sizeOfArray-1):
+                break
+            tim.forward(spacing)
+
+        #if end condition, do not move forward
+        if(row == sizeOfArray-1):
+            break
+
+        elif(row % 2 == 0):
             tim.left(90)
-            tim.forward(sizeOfPainting/sizeOfArray+2)
+            tim.forward(spacing)
             tim.left(90)
-        elif(row % 3 ==0 ):
-            tim.stamp()
+
+        elif(row % 2 != 0):
             tim.right(90)
-            tim.forward(sizeOfPainting/sizeOfArray+2)
+            tim.forward(spacing)
             tim.right(90)
-        else:
-            tim.color(dots[randomDot])
-            tim.forward(sizeOfPainting/sizeOfArray+2)
-            rowIndex += 1
+        
     Screen().exitonclick()
 
 tim.speed(10)
-offset = 20
-size = 300
-array = 6
+size = 500
+array = 10
+spacing = size/(array+1)
+print(spacing)
 homePosition(size)
 drawBorder(size)
-goToStart(offset)
-printDots(size, array, offset)
+goToStart(spacing)
+printDots(spacing, array)
