@@ -19,3 +19,18 @@ class Snake():
 
   def turn_right(self):
     self.snakeSegments[0].right(90)
+
+  def move(self):
+    for index in range(len(self.snakeSegments)-1, 0, -1):
+      currentHead = self.positions[index-1]
+      print(currentHead)
+      self.snakeSegments[index].goto(currentHead)
+      self.positions[index] = currentHead
+    self.snakeSegments[0].forward(20)
+    self.positions[0] = self.snakeSegments[0].pos()
+
+
+    # currentHead = self.positions[index-1]
+
+  def printLocations(self):
+    print(self.positions)
