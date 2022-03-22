@@ -37,6 +37,3 @@ class Snake():
       self.positions[index] = currentHead
     self.snakeSegments[0].forward(20)
     self.positions[0] = self.snakeSegments[0].pos()
-
-  def getLocations(self):
-    return(self.positions)
