@@ -53,7 +53,7 @@ while gameOn:
   screen.onkey(key="d", fun=turn_right)
   screen.update()
   time.sleep(.25)
-  
+
   if not foodPresent:
     food = createFood()
     foodPresent = True
@@ -67,12 +67,11 @@ while gameOn:
     del food
     foodPresent = False
 
-  for index in range(len(snakeSegments)-1, -1, -1):
+  for index in range(len(snakeSegments)-1, 0, -1):
     currentHead = snakeSegments[index-1].pos()
-    if(index > 0):
-      snakeSegments[index].goto(currentHead)
-    else:
-      snakeSegments[index].forward(20)
+    snakeSegments[index].goto(currentHead)
+  snakeSegments[0].forward(20)
+
 
 
 gameOn = True
