@@ -1,27 +1,19 @@
 from turtle import Turtle
 import random
 
-class Food():
-  def __init__(self):
-      self.isPresent = False
-      self.location = []
-      # self.clear_food()
-      self.createFood()
 
-  def createFood(self):
-    if(self.isPresent):
-      self.clear_food()
-    xPos = random.randint(-300, 300)
-    yPos = random.randint(-300, 300)
-    xPos = int(round(xPos/20)*20)
-    yPos = int(round(yPos/20)*20)
+class Food(Turtle):
 
-    food = Turtle("square")
-    food.color("red")
-    food.penup()
-    food.goto(xPos, yPos)
-    self.position = [xPos, yPos]
-    return(food)
+    def __init__(self):
+        super().__init__()
+        self.shape("circle")
+        self.penup()
+        self.shapesize(stretch_len=0.5, stretch_wid=0.5)
+        self.color("blue")
+        self.speed("fastest")
+        self.refresh()
 
-  def clear_food(self):
-    Food.reset()
+    def refresh(self):
+        random_x = random.randint(-280, 280)
+        random_y = random.randint(-280, 280)
+        self.goto(random_x, random_y)
