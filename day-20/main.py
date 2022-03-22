@@ -3,10 +3,7 @@ from threading import currentThread
 from turtle import Turtle, Screen
 import random
 import time
-
-class SnakeGame():
-  def __init__(self) -> None:
-      pass
+from snake import Snake
 
 screen = Screen()
 screen.setup(width=600, height=600)
@@ -15,11 +12,11 @@ screen.bgcolor("black")
 screen.tracer(0)
 screen.listen()
 
-def turn_left():
-  snakeSegments[0].left(90)
+# def turn_left():
+#   snakeSegments[0].left(90)
 
-def turn_right():
-  snakeSegments[0].right(90)
+# def turn_right():
+#   snakeSegments[0].right(90)
 
 def createFood():
   xPos = random.randint(-300, 300)
@@ -33,44 +30,34 @@ def createFood():
   food.goto(xPos, yPos)
   return(food)
 
-snakePosition = [(0,0), (-20, 0), (-40, 0)]
-snakeSegments = []
-
-def createSnakeSegments(numberOfSegments):
-  for xPos in range (0, numberOfSegments):
-    snakeBody = Turtle("square")
-    snakeBody.color("white")
-    snakeBody.penup()
-    snakeBody.goto(snakePosition[xPos])
-    snakeSegments.append(snakeBody)
-
 gameOn = True
 foodPresent = False
-createSnakeSegments(3)
+snake = Snake()
 
+print(snake)
 while gameOn:
-  screen.onkey(key="a", fun=turn_left)
-  screen.onkey(key="d", fun=turn_right)
+  screen.onkey(key="a", fun=snake.turn_left)
+  screen.onkey(key="d", fun=snake.turn_right)
   screen.update()
   time.sleep(.25)
 
-  if not foodPresent:
-    food = createFood()
-    foodPresent = True
+  # if not foodPresent:
+  #   food = createFood()
+  #   foodPresent = True
 
-  print(snakeSegments[0].pos())
-  print(food.pos())
+  # print(snakeSegments[0].pos())
+  # print(food.pos())
 
-  if(snakeSegments[0].pos() == food.pos()):
-    food.reset()
-    createSnakeSegments(1)
-    del food
-    foodPresent = False
+  # if(snakeSegments[0].pos() == food.pos()):
+  #   food.reset()
+  #   createSnakeSegments(1)
+  #   del food
+  #   foodPresent = False
 
-  for index in range(len(snakeSegments)-1, 0, -1):
-    currentHead = snakeSegments[index-1].pos()
-    snakeSegments[index].goto(currentHead)
-  snakeSegments[0].forward(20)
+  for index in range(len(snake.snakeSegments)-1, 0, -1):
+    currentHead = snake.snakeSegments[index-1].pos()
+    snake.snakeSegments[index].goto(currentHead)
+  snake.snakeSegments[0].forward(20)
 
 
 
