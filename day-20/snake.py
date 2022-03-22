@@ -21,33 +21,59 @@ def turn_left():
 def turn_right():
   snakeSegments[0].right(90)
 
+def createFood():
+  xPos = random.randint(-300, 300)
+  yPos = random.randint(-300, 300)
+  xPos=int(round(xPos/20)*20)
+  yPos=int(round(yPos/20)*20)
+
+  food = Turtle("square")
+  food.color("red")
+  food.penup()
+  food.goto(xPos, yPos)
+  return(food)
+
 snakePosition = [(0,0), (-20, 0), (-40, 0)]
 snakeSegments = []
 
-for xPos in range (0, 3):
-  snakeBody = Turtle("square")
-  snakeBody.color("white")
-  snakeBody.penup()
-  snakeBody.goto(snakePosition[xPos])
-  snakeSegments.append(snakeBody)
+def createSnakeSegments(numberOfSegments):
+  for xPos in range (0, numberOfSegments):
+    snakeBody = Turtle("square")
+    snakeBody.color("white")
+    snakeBody.penup()
+    snakeBody.goto(snakePosition[xPos])
+    snakeSegments.append(snakeBody)
 
 gameOn = True
-
+foodPresent = False
+createSnakeSegments(3)
 
 while gameOn:
   screen.onkey(key="a", fun=turn_left)
   screen.onkey(key="d", fun=turn_right)
   screen.update()
-  time.sleep(.5)
-  print(len(snakeSegments))
+  time.sleep(.25)
+  
+  if not foodPresent:
+    food = createFood()
+    foodPresent = True
+
+  print(snakeSegments[0].pos())
+  print(food.pos())
+
+  if(snakeSegments[0].pos() == food.pos()):
+    food.reset()
+    createSnakeSegments(1)
+    del food
+    foodPresent = False
+
   for index in range(len(snakeSegments)-1, -1, -1):
     currentHead = snakeSegments[index-1].pos()
-    print(currentHead)
-    print(index)
     if(index > 0):
       snakeSegments[index].goto(currentHead)
     else:
       snakeSegments[index].forward(20)
+
 
 gameOn = True
 
