@@ -15,7 +15,12 @@ class Paddle(Turtle):
     self.color("white")
 
   def go_up(self):
-    self.forward(10)
+    self.forward(40)
 
   def go_down(self):
-    self.backward(10)
+    self.backward(40)
+
+  # def checkImpact(self, ball):
+  #   self
+
+  #   screen.setup(width=800, height=600)
