@@ -15,7 +15,8 @@ state_data = pandas.read_csv("50_states.csv")
 gameOn = True
 
 while gameOn:
-  answer = screen.textinput(title="Guess a state", prompt=f"What is a state name? {correctCount}/50")
+  correct_states = []
+  answer = screen.textinput(title="Guess a state", prompt=f"What is a state name? {correctCount}/50").title()
   states = list(state_data.state)
 
   if answer in states:
@@ -27,6 +28,13 @@ while gameOn:
     answer_turtle.goto(x, y)
     answer_turtle.write(answer)
     correctCount += 1
-  if(correctCount == 50 or not answer):
+    correct_states.append(answer)
+  if(correctCount == 50 or answer == "Exit"):
     gameOn = False
-turtle.mainloop()
+    missing_states = []
+    for state in states:
+      if state not in correct_states:
+        missing_states.append(state)
+
+new_data = pandas.DataFrame(missing_states)
+new_data.to_csv("Missing States")
