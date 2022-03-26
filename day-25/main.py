@@ -31,10 +31,7 @@ while gameOn:
     correct_states.append(answer)
   if(correctCount == 50 or answer == "Exit"):
     gameOn = False
-    missing_states = []
-    for state in states:
-      if state not in correct_states:
-        missing_states.append(state)
+    missing_states = [state for state in states if state not in correct_states]
 
 new_data = pandas.DataFrame(missing_states)
 new_data.to_csv("Missing States")
