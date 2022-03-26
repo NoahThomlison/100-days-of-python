@@ -5,4 +5,3 @@ with open("file2.txt") as file2:
 
   commonNumbers = [int(num) for num in file1Data if num in file2Data]
   print(commonNumbers)
-# commonData = [data in data for file1Data if ]
