@@ -21,6 +21,8 @@ def resetTimer():
   marks = ""
   howManyPomodoros["text"] = marks
   timerLabel["text"] = "Timer"
+  global reps
+  reps = 0
 
 # # ---------------------------- TIMER MECHANISM ------------------------------- # 
 def startTimer():
