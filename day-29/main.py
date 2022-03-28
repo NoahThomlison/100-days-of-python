@@ -1,9 +1,16 @@
 from tkinter import *
 from turtle import width
+from fileinput import filename
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+def savePassword():
+  website = websiteField.get()
+  password = passwordField.get()
+  email = emailUserNameField.get()
+  with open("passwords.txt", "w") as file:
+    file.write((f"{website} | {email} | {password}\n"))
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
@@ -34,7 +41,7 @@ passwordField.grid(row=3,column=1)
 
 passwordButton = Button(text="Generate Password")
 passwordButton.grid(row=3,column=2)
-addButton = Button(text="Add", width=36)
+addButton = Button(text="Add", width=36, command=savePassword)
 addButton.grid(row=4,column=1, columnspan=2)
 
 window.mainloop()
