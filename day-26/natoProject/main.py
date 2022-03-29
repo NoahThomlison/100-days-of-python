@@ -7,7 +7,14 @@ natoAlphabetDict = {row["letter"]: row["code"] for (index, row) in natoAlphabet.
 print(natoAlphabetDict)
 
 #TODO 2. Create a list of the phonetic code words from a word that the user inputs.
-word = input("Enter a word: ").upper()
-wordNato = [natoAlphabetDict[letter] for letter in word]
-print (wordNato)
+def generateNato():
+  word = input("Enter a word: ").upper()
+  try:
+    wordNato = [natoAlphabetDict[letter] for letter in word]
+  except KeyError:
+    print("Sorry, only letters in the alphabet please.")
+    generateNato()
+  else:  
+    print (wordNato)
   
+generateNato()
