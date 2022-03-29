@@ -60,6 +60,25 @@ def savePassword():
       websiteField.delete(0, END)
       passwordField.delete(0, END)
 
+# ---------------------------- GET PASSWORD ------------------------------- #
+def searchForPassword():
+  website = websiteField.get()
+  
+  try:
+    with open("passwords.json", "r") as file:
+      passwords = json.load(file)
+
+  except FileNotFoundError:
+    messagebox.showinfo(title="Error", message="No file found.")
+
+  else:
+    if(website in passwords):
+      email = passwords[website]["email"]
+      password = passwords[website]["password"]
+      messagebox.showinfo(title=f"{website} information", message=f"Email: {email}\nPassword: {password}")
+    else:
+      messagebox.showerror(title="Error", message=f"The website {website} does not have stored information")
+
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Password Manager")
@@ -77,8 +96,8 @@ emailUserNameLabel.grid(row=2,column=0)
 passwordLabel = Label(text="Password:")
 passwordLabel.grid(row=3,column=0)
 
-websiteField = Entry(width=35)
-websiteField.grid(row=1,column=1, columnspan=2)
+websiteField = Entry(width=21)
+websiteField.grid(row=1,column=1)
 websiteField.focus()
 emailUserNameField = Entry(width=35)
 emailUserNameField.insert(0, "noahthomlison@gmail.com")
@@ -87,9 +106,12 @@ emailUserNameField.grid(row=2,column=1, columnspan=2)
 passwordField = Entry(width=21)
 passwordField.grid(row=3,column=1)
 
+searchButton = Button(text="Search", command=searchForPassword)
+searchButton.grid(row=1,column=2)
+
 passwordButton = Button(text="Generate Password", command=createPassword)
 passwordButton.grid(row=3,column=2)
 addButton = Button(text="Add", width=36, command=savePassword)
-addButton.grid(row=4,column=1, columnspan=2)
+addButton.grid(row=4, column=1, columnspan=2)
 
 window.mainloop()
