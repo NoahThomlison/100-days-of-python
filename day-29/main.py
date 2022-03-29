@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from fileinput import filename
 import random
+import json
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def createPassword():
@@ -26,6 +27,12 @@ def savePassword():
   website = websiteField.get()
   password = passwordField.get()
   email = emailUserNameField.get()
+  newEntry = {
+    website: {
+      "email": email,
+      "password": password
+    }
+  }
   if(len(email) == 0):
     messagebox.showerror(title="Error", message=f"The email cannot be blank")
 
@@ -36,10 +43,20 @@ def savePassword():
     messagebox.showerror(title="Error", message=f"The password cannot be blank")
 
   else:
-    is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered: \nEmail: {email} \nPassword: {password} \nIs it okay to save?")
-    if is_ok:
-      with open("passwords.txt", "a") as file:
-        file.write((f"{website} | {email} | {password}\n"))
+    try:
+      with open("passwords.json", "r") as file:
+        oldPasswords = json.load(file)
+        
+    except FileNotFoundError:
+      with open("passwords.json", "w") as file:
+        json.dump(newEntry, file, indent=4)
+        oldPasswords = json.load(file)
+
+    else:
+      oldPasswords.update(newEntry)
+      with open("passwords.json", "w") as file:
+        json.dump(oldPasswords, file, indent=4)
+    finally:
       websiteField.delete(0, END)
       passwordField.delete(0, END)
 
