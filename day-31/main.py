@@ -4,12 +4,26 @@ import pandas
 import random
 words = pandas.read_csv("data/french_words.csv")
 wordsDict = {row["French"]: row["English"] for (index, row) in words.iterrows()}
+frenchWord, englishWord = random.choice(list(wordsDict.items()))
+
+# Flip card
+def flipCard():
+  print("flip")
+  global englishWord
+  global frenchWord
+  canvas.itemconfig(card_background, image=cardBack)
+  canvas.itemconfig(card_word, text=englishWord)
+  canvas.itemconfig(card_title, text="English")
 
 # Change Word
 def changeWord():
-  englishWord, frenchWord = random.choice(list(wordsDict.items()))
+  global englishWord
+  global frenchWord
+  frenchWord, englishWord = random.choice(list(wordsDict.items()))
   canvas.itemconfig(card_word, text=frenchWord)
   canvas.itemconfig(card_title, text="French")
+  canvas.itemconfig(card_background, image=cardFront)
+  window.after(3000, func=flipCard)
 
 # Create UI
 window = Tk()
@@ -22,8 +36,8 @@ window.config(padx=50, pady=50, width=1000, height=800, bg=BACKGROUND_COLOR)
 
 canvas = Canvas( bg=BACKGROUND_COLOR, width=800, height=526, highlightthickness=0)
 card_background = canvas.create_image(400, 263, image=cardFront)
-card_title = canvas.create_text(400, 150, text="", font=("Ariel", 40, "italic"))
-card_word = canvas.create_text(400, 263, text="", font=("Ariel", 60, "bold"))
+card_title = canvas.create_text(400, 150, text="French", font=("Ariel", 40, "italic"))
+card_word = canvas.create_text(400, 263, text=frenchWord, font=("Ariel", 60, "bold"))
 canvas.grid(row=0, column=0, columnspan=2)
 
 #Buttons
@@ -32,5 +46,6 @@ check_button.grid(row=2, column=0)
 x_button = Button(image=wrongImage, highlightthickness=0, command=changeWord)
 x_button.grid(row=2, column=1)
 
-window.mainloop()
+window.after(3000, func=flipCard)
 
+window.mainloop()
