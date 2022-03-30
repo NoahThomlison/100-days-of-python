@@ -1,11 +1,19 @@
 BACKGROUND_COLOR = "#B1DDC6"
 from tkinter import *
+from numpy import e
 import pandas
 import random
-words = pandas.read_csv("data/french_words.csv")
-wordsDict = {row["French"]: row["English"] for (index, row) in words.iterrows()}
-frenchWord, englishWord = random.choice(list(wordsDict.items()))
 
+try:
+  unknown_words = pandas.read_csv("data/unknown_words.csv")
+  wordsDict = {row["French"]: row["English"] for (index, row) in unknown_words.iterrows()}
+
+except FileNotFoundError:
+  words = pandas.read_csv("data/french_words.csv")
+  wordsDict = {row["French"]: row["English"] for (index, row) in words.iterrows()}
+
+frenchWord, englishWord = random.choice(list(wordsDict.items()))
+print(wordsDict)
 # Flip card
 def flipCard():
   print("flip")
@@ -25,6 +33,17 @@ def changeWord():
   canvas.itemconfig(card_background, image=cardFront)
   window.after(3000, func=flipCard)
 
+# Correct Word
+def correctWord():
+  window.after_cancel(timer)
+  global frenchWord
+  global englishWord
+  global wordsDict
+  del wordsDict[frenchWord]
+  data = pandas.DataFrame(wordsDict.items(), columns=['French', 'English'])
+  data.to_csv("data/unknown_words.csv", index=False)
+  changeWord()
+
 # Create UI
 window = Tk()
 rightImage = PhotoImage(file="images/right.png")
@@ -41,11 +60,11 @@ card_word = canvas.create_text(400, 263, text=frenchWord, font=("Ariel", 60, "bo
 canvas.grid(row=0, column=0, columnspan=2)
 
 #Buttons
-check_button = Button(image=rightImage, highlightthickness=0, command=changeWord)
+check_button = Button(image=rightImage, highlightthickness=0, command=correctWord)
 check_button.grid(row=2, column=0)
 x_button = Button(image=wrongImage, highlightthickness=0, command=changeWord)
 x_button.grid(row=2, column=1)
 
-window.after(3000, func=flipCard)
+timer = window.after(3000, func=flipCard)
 
 window.mainloop()
