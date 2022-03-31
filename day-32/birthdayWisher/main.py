@@ -40,4 +40,38 @@
 # HINT 4: The message should have the Subject: Happy Birthday then after \n\n The Message Body.
 
 
+import pandas
+import smtplib
+import datetime as dt
+import random
 
+now = dt.datetime.now()
+my_email = "noahspythonemail@gmail.com"
+my_password = "noahspythonemailpassword"
+weekDays = ("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday")
+
+birthdays = pandas.read_csv("birthdays.csv")
+birthdays = birthdays.to_dict('records')
+
+now = dt.datetime.now()
+currentMonth = now.month
+currentDay = now.day
+
+letterIndex = random.randint(1, 3)
+with open(f"./letter_templates/letter_{letterIndex}.txt") as data:
+  letterTemplate = data.read()
+  
+for day in birthdays:
+  if(day['month'] == currentMonth and day['day'] == currentDay):
+    name = day["name"]
+    letterTemplate = letterTemplate.replace("[NAME]", name)
+
+    print(letterTemplate)
+    with smtplib.SMTP("smtp.gmail.com") as connection:
+      connection.starttls()
+      connection.login(user=my_email, password=my_password)
+      connection.sendmail(
+        from_addr=my_email, 
+        to_addrs=my_email, 
+        msg=f"Subject:Happy Birthday {name}!\n\n{letterTemplate}")
+      connection.close()
