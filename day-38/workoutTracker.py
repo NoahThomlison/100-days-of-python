@@ -52,4 +52,4 @@ sheetly_body = {
     "calories": calories
   }
 }
-response = requests.post(url=sheetlyURL, json=sheetly_body)
+response = requests.post(url=sheetlyURL, json=sheetly_body, auth=("noah", "123456789"))
