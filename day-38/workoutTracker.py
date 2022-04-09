@@ -1,5 +1,6 @@
 from pydoc import resolve
 import requests
+from datetime import datetime
 
 nutrition_ix_key = "70c7984e84b34028a06cb2bfa58921da"
 nutrition_ix_APP_ID ="4ae3f135"
@@ -25,3 +26,30 @@ response = requests.post(url=nutrition_ix_exerciseUrl, json=exerciseParams, head
 response.raise_for_status()
 exerciseData = response.json()
 print(exerciseData)
+
+today_date = datetime.now().strftime("%d/%m/%Y")
+now_time = datetime.now().strftime("%X")
+exercise = exerciseData["exercises"][0]['name']
+duration = exerciseData["exercises"][0]['duration_min']
+calories = exerciseData["exercises"][0]['nf_calories']
+print(exercise, duration, calories)
+
+# sheetly get info
+sheetlyURL = 'https://api.sheety.co/fb24b170d5576eb361cf6c5aa9b91d83/myWorkouts100DaysOfPython/workouts'
+# response = requests.get(url=sheetlyURL, json=exerciseParams, headers=HEADERS)
+# response.raise_for_status()
+# sheetdata = response.json()
+# print(sheetdata)
+
+
+# sheetly post
+sheetly_body = {
+  "workout": {
+    "date": today_date,
+    "time": now_time,
+    "exercise": exercise,
+    "duration": duration,
+    "calories": calories
+  }
+}
+response = requests.post(url=sheetlyURL, json=sheetly_body)
