@@ -34,13 +34,7 @@ duration = exerciseData["exercises"][0]['duration_min']
 calories = exerciseData["exercises"][0]['nf_calories']
 print(exercise, duration, calories)
 
-# sheetly get info
 sheetlyURL = 'https://api.sheety.co/fb24b170d5576eb361cf6c5aa9b91d83/myWorkouts100DaysOfPython/workouts'
-# response = requests.get(url=sheetlyURL, json=exerciseParams, headers=HEADERS)
-# response.raise_for_status()
-# sheetdata = response.json()
-# print(sheetdata)
-
 
 # sheetly post
 sheetly_body = {
