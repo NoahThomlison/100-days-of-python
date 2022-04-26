@@ -40,10 +40,10 @@ password.send_keys(Keys.ENTER)
 time.sleep(3)
 
 jobs = driver.find_elements(By.CSS_SELECTOR, ".jobs-search-results__list-item")
-# try:
-#   pages = driver.find_elements(By.CSS_SELECTOR, '.artdeco-pagination__pages li')
-# except NoSuchElementException:
-pages = [0]
+try:
+  pages = driver.find_elements(By.CSS_SELECTOR, '.artdeco-pagination__pages li')
+except NoSuchElementException:
+  pages = [0]
 print(f'Quick Apply Only: {quickApplyOnly}')
 for page in pages:
   print(len(jobs))
