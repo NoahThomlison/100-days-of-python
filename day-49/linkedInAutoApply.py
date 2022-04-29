@@ -40,48 +40,41 @@ password.send_keys(Keys.ENTER)
 time.sleep(3)
 
 jobs = driver.find_elements(By.CSS_SELECTOR, ".jobs-search-results__list-item")
-try:
-  pages = driver.find_elements(By.CSS_SELECTOR, '.artdeco-pagination__pages li')
-except NoSuchElementException:
-  pages = [0]
-print(f'Quick Apply Only: {quickApplyOnly}')
-for page in pages:
-  print(len(jobs))
-  for i in range(len(jobs)):
-    jobs[i].click()
-    time.sleep(1)
-    try:
-      driver.find_element(By.CSS_SELECTOR, "[aria-label='Dismiss']")
-      apply_button = driver.find_element_by_css_selector(".jobs-s-apply button")
-      apply_button.click()
-      time.sleep(1)
-      submit_button = driver.find_element(By.CSS_SELECTOR, "footer button")
-      if submit_button.get_attribute("aria-label") == "Continue to next step":  
-        if quickApplyOnly:
-          time.sleep(1)
-          driver.find_element(By.CSS_SELECTOR, "[aria-label='Dismiss']").click()
-          time.sleep(1)
-          driver.find_element(By.CSS_SELECTOR, "[data-control-name='discard_application_confirm_btn']").click()  
-          print("Complex application, skipped.")
-          continue
-        else:
-          print("Complex Application you have 30 seconds to complete it")
-          time.sleep(30)
-          # submit_button.click() 
-          # time.sleep(1)
-          # submit_button.click() 
-          # time.sleep(10)
-          # driver.find_element(By.CSS_SELECTOR, '[aria-label="Review your application"]').click()
-          # time.sleep(1)
-          # driver.find_element(By.CSS_SELECTOR, '[aria-label="Submit application"]').click()
-          # time.sleep(5)
-      else:
-        print("Applied")
-        submit_button.click()  
-        driver.find_element(By.CSS_SELECTOR, '[aria-labelledby="post-apply-modal"] button').click()
+# try:
+#   pages = driver.find_elements(By.CSS_SELECTOR, '.artdeco-pagination__pages li')
+# except NoSuchElementException:
+#   print("no pages")
+#   pages = driver.find_element(By.CSS_SELECTOR, '.artdeco-pagination__pages li')
 
-    except NoSuchElementException:
-      print("No application button, skipped.")
-      continue
-  page.click()
+print(f'Quick Apply Only: {quickApplyOnly}')
+# for page in pages:
+print(len(jobs))
+for i in range(len(jobs)):
+  jobs[i].click()
+  time.sleep(1)
+  try:
+    driver.find_element(By.CSS_SELECTOR, "[aria-label='Dismiss']")
+    apply_button = driver.find_element_by_css_selector(".jobs-s-apply button")
+    apply_button.click()
+    time.sleep(1)
+    submit_button = driver.find_element(By.CSS_SELECTOR, "footer button")
+    if submit_button.get_attribute("aria-label") == "Continue to next step":  
+      if quickApplyOnly:
+        time.sleep(1)
+        driver.find_element(By.CSS_SELECTOR, "[aria-label='Dismiss']").click()
+        time.sleep(1)
+        driver.find_element(By.CSS_SELECTOR, "[data-control-name='discard_application_confirm_btn']").click()  
+        print("Complex application, skipped.")
+        continue
+      else:
+        print("Complex Application you have 30 seconds to complete it")
+        time.sleep(30)
+    else:
+      print("Applied")
+      submit_button.click()  
+      driver.find_element(By.CSS_SELECTOR, '[aria-labelledby="post-apply-modal"] button').click()
+  except NoSuchElementException:
+    print("No application button, skipped.")
+    continue
+  # page.click()
 
