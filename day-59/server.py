@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    url = "https://api.npoint.io/c790b4d5cab58020d391"
+    url = "https://api.npoint.io/02d5e286e053bdcf0a39"
     posts = requests.get(url).json()
     return render_template("index.html", posts=posts)
 
@@ -19,7 +19,7 @@ def contact():
 
 @app.route("/post/<int:index>")
 def show_post(index):
-    url = "https://api.npoint.io/c790b4d5cab58020d391"
+    url = "https://api.npoint.io/02d5e286e053bdcf0a39"
     posts = requests.get(url).json()
     requested_post = None
     for blog_post in posts:

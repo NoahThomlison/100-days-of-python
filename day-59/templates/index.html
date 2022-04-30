@@ -41,7 +41,8 @@
                     <!-- Post preview-->
                     {% for post in posts %}
                         <div class="post-preview">
-                            <a href="{‌{ url_for('show_post', index=post.id) }}">
+                            <h1>{{post["id"]}}</h1>
+                            <a href='{‌{ url_for("show_post", index=1) }}'>
                                 <h2 class="post-title">{{post["title"]}}</h2>
                                 <h3 class="post-subtitle">{{post["subtitle"]}}</h3>
                             </a>
