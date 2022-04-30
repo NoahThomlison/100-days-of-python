@@ -4,11 +4,18 @@ import requests
 app = Flask(__name__)
 
 @app.route('/')
-def blogHome():
-    url = "https://api.npoint.io/bc51ef055aeee88fde25"
-    blogPosts = requests.get(url).json()
-    print(blogPosts)
-    return render_template("index.html", posts=blogPosts)
+def home():
+    return render_template("index.html")
+
+
+@app.route('/about')
+def about():
+    return render_template("about.html")
+
+@app.route('/contact')
+def contact():
+    return render_template("contact.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
