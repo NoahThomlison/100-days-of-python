@@ -5,7 +5,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    url = "https://api.npoint.io/c790b4d5cab58020d391"
+    response = requests.get(url).json()
+    return render_template("index.html", posts=response)
 
 
 @app.route('/about')
