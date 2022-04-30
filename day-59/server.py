@@ -17,7 +17,7 @@ def about():
 def contact():
     return render_template("contact.html")
 
-@app.route('/post/<int:index>')
+@app.route("/post/<int:index>")
 def show_post(index):
     url = "https://api.npoint.io/c790b4d5cab58020d391"
     posts = requests.get(url).json()
